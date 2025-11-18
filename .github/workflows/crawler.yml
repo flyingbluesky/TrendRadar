@@ -64,22 +64,22 @@ jobs:
           GITHUB_ACTIONS: true
         run: python main.py
 
-      - name: Commit and push if changes
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
+    - name: Commit and push if changes
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
 
- # Stage changes
-   git add -A
+        # Stage changes
+        git add -A
 
- # If no changes, exit early
-   git diff --quiet && git diff --staged --quiet && exit 0
+        # If no changes, exit early
+        git diff --quiet && git diff --staged --quiet && exit 0
 
- # Commit
-   git commit -m "Auto update by GitHub Actions at $(TZ=Asia/Shanghai date)"
+        # Commit
+        git commit -m "Auto update by GitHub Actions at $(TZ=Asia/Shanghai date)"
 
- # Pull latest remote master to avoid push conflicts
-   git pull origin master --rebase || true
+        # Pull latest remote master to avoid push conflicts
+        git pull origin master --rebase || true
 
- # Push
-   git push origin master
+        # Push
+        git push origin master
