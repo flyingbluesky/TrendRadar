@@ -66,7 +66,20 @@ jobs:
 
       - name: Commit and push if changes
         run: |
-          git config --global user.name 'GitHub Actions'
-          git config --global user.email 'actions@github.com'
-          git add -A
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto update by GitHub Actions at $(TZ=Asia/Shanghai date)" && git push)
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+ # Stage changes
+   git add -A
+
+ # If no changes, exit early
+   git diff --quiet && git diff --staged --quiet && exit 0
+
+ # Commit
+   git commit -m "Auto update by GitHub Actions at $(TZ=Asia/Shanghai date)"
+
+ # Pull latest remote master to avoid push conflicts
+   git pull origin master --rebase || true
+
+ # Push
+   git push origin master
